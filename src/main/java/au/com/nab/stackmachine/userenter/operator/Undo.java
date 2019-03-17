@@ -14,13 +14,15 @@ public class Undo implements UserEntry {
 		OperationRecord record = storage.popOperationRecord();
 		
 		UserEntry operator = record.getOperator();
-		if (isNeedClearUpResult().test(operator)) {
+		if (isNeedClearUpResult().test(operator) 
+				&& (!(operator instanceof Pop))) {
 			//Pop out the last digit from stack
 			//if the last operator is NOT Clear
 			storage.popDigit();
 		}
-		if (null != record.getOperator()) {
-			//Last operation has a operator,
+		if ((isUnaryOperator().test(operator)) 
+			|| (isBiOperator().test(operator))) {
+			//Last operation has a BiOperator,
 			//Restore those parameters
 			for(BigDecimal digit : record.getParameters()) {
 				storage.pushDigit(digit);
@@ -33,17 +35,16 @@ public class Undo implements UserEntry {
 	 * Clear class
 	 * 
 	 * @return true if the opeartor is NOT a Clear class.
-	 *  For example:
-	 * 			isNeedClearUpResult.test(null) => true
-	 * 			isNeedClearUpResult.test(Addition) => true
-	 * 			isNeedClearUpResult.test(Subtraction) => true
-	 * 			isNeedClearUpResult.test(Multiplication) => true
-	 * 			isNeedClearUpResult.test(Division) => true
-	 * 			isNeedClearUpResult.test(SquareRoot) => true
-	 * 			isNeedClearUpResult.test(Undo) => true
-	 * 			isNeedClearUpResult.test(Clear) => false
 	 */
 	static Predicate<UserEntry> isNeedClearUpResult() {
 		return e -> ((null == e) || (!(e instanceof Clear)));
+	}
+	
+	static Predicate<UserEntry> isBiOperator() {
+		return e -> ((null != e) && (e instanceof BiOperator));
+	}
+	
+	static Predicate<UserEntry> isUnaryOperator() {
+		return e -> ((null !=e) && (e instanceof UnaryOperator));
 	}
 }

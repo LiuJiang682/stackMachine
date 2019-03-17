@@ -1,14 +1,17 @@
 package au.com.nab.stackmachine.userenter.operator;
 
-import au.com.nab.stackmachine.storage.Storage;
-import au.com.nab.stackmachine.userenter.UserEntry;
+import java.math.BigDecimal;
 
-public class Pop implements UserEntry {
+import au.com.nab.stackmachine.history.record.OperationRecord;
+import au.com.nab.stackmachine.storage.Storage;
+
+public class Pop extends UnaryOperator {
 
 	@Override
-	public void execute(Storage storage) {
-		// TODO Auto-generated method stub
-
+	protected void performDetailOperation(Storage storage) {
+		BigDecimal digits = storage.popDigit();
+		OperationRecord record = this.getOperationRecord(digits);
+		storage.pushOperationRecord(record);
 	}
 
 }

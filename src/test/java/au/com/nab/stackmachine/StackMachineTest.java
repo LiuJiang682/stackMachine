@@ -34,6 +34,7 @@ import au.com.nab.stackmachine.userenter.operator.Add;
 import au.com.nab.stackmachine.userenter.operator.Clear;
 import au.com.nab.stackmachine.userenter.operator.Inv;
 import au.com.nab.stackmachine.userenter.operator.Mul;
+import au.com.nab.stackmachine.userenter.operator.Push;
 import au.com.nab.stackmachine.userenter.operator.Undo;
 
 public class StackMachineTest {
@@ -211,18 +212,18 @@ public class StackMachineTest {
 	@Test
 	public void whenMockStorageAndInputProvidedThenStorageShouldBeUpdated() throws Throwable {
 		//Given the mock storage and user input
-		StackMachine partialMockCalculator = PowerMockito.mock(StackMachine.class);
+		StackMachine partialMockStackMachine = PowerMockito.mock(StackMachine.class);
 		UserEnter mockUserEnter = PowerMockito.mock(UserEnter.class);
 		List<UserEntry> entries = new ArrayList<>();
-		entries.add(new DigitalUserEntry("6"));
+		entries.add(new Push("Push 6"));
 		PowerMockito.when(mockUserEnter.getUserInput()).thenReturn(entries, null);
-		Whitebox.setInternalState(partialMockCalculator, "userEnter", mockUserEnter);
+		Whitebox.setInternalState(partialMockStackMachine, "userEnter", mockUserEnter);
 		Storage mockStorage = PowerMockito.mock(Storage.class);
-		Whitebox.setInternalState(partialMockCalculator, "storage", mockStorage);
-		PowerMockito.doCallRealMethod().when(partialMockCalculator, "run");
+		Whitebox.setInternalState(partialMockStackMachine, "storage", mockStorage);
+		PowerMockito.doCallRealMethod().when(partialMockStackMachine, "run");
 		
 		//When the run method called
-		partialMockCalculator.run();
+		partialMockStackMachine.run();
 		//Then the storage updated
 		verify(mockStorage).pushDigit(Matchers.eq(new BigDecimal(6)));
 		verify(mockStorage).pushOperationRecord(Matchers.any(OperationRecord.class));

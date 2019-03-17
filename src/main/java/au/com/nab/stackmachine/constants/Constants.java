@@ -8,5 +8,7 @@ public interface Constants {
 	
 	interface Numerice {
 		static final int ZERO = 0;
+		static final int ONE = 1;
+		static final int TWO = 2;
 	}
 }

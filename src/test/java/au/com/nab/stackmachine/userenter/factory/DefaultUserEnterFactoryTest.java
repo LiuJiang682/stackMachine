@@ -7,7 +7,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.InputStream;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -22,7 +21,6 @@ import org.powermock.reflect.Whitebox;
 
 import au.com.nab.stackmachine.fixture.StackMachineTestFixture;
 import au.com.nab.stackmachine.userenter.UserEntry;
-import au.com.nab.stackmachine.userenter.factory.DefaultUserEnterFactory;
 import au.com.nab.stackmachine.userenter.operator.Add;
 
 
@@ -98,42 +96,6 @@ public class DefaultUserEnterFactoryTest {
 		//Then the an empty optional object should return
 		assertNotNull(userEntry);
 		assertFalse(userEntry.isPresent());
-	}
-	
-	/**
-	 * Given the user enter a valid digits string
-	 * When the constructUserEntry method called
-	 * Then a Optional UserEntry object  
-	 * should return
-	 */
-	@Test
-	public void whenUserEnteredValidStringThenAnDigitalUserEntryOptionalObjectShouldReturn() {
-		//Given user entered an invalid command string 
-		String userEntered = "123";
-		//When the constructUserEntry called
-		Optional<UserEntry> userEntry = testInstance.constructUserEntry(userEntered);
-		//Then the an valid optional object should return
-		assertNotNull(userEntry);
-		assertTrue(userEntry.isPresent());
-	}
-	
-	/**
-	 * Given the user enter a valid negative digits string
-	 * When the constructUserEntry method called
-	 * Then a Optional UserEntry object  
-	 * should return
-	 */
-	@Test
-	public void whenUserEnteredValidNegativeStringThenAnDigitalUserEntryOptionalObjectShouldReturn() {
-		//Given user entered an invalid command string 
-		String userEntered = "-123";
-		//When the constructUserEntry called
-		Optional<UserEntry> userEntry = testInstance.constructUserEntry(userEntered);
-		//Then the an valid optional object should return
-		assertNotNull(userEntry);
-		assertTrue(userEntry.isPresent());
-		BigDecimal retrieve = Whitebox.getInternalState(userEntry.get(), "digits");
-		assertEquals(new BigDecimal(-123), retrieve);
 	}
 	
 	/**

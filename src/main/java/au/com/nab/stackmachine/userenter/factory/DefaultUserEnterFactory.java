@@ -10,7 +10,6 @@ import java.util.Scanner;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import au.com.nab.stackmachine.constants.Constants.Strings;
 import au.com.nab.stackmachine.userenter.UserEnter;
 import au.com.nab.stackmachine.userenter.UserEntry;
 import au.com.nab.stackmachine.userenter.model.DigitalUserEntry;
@@ -20,7 +19,6 @@ public class DefaultUserEnterFactory implements UserEnter {
 	private static final Logger LOGGER = Logger.getLogger(DefaultUserEnterFactory.class);
 	
 	private static final String CTRL_C = "\u0003";
-	private static final String REGEX_DIGIT_PATTERN = "^-*\\d+$";
 
 	private Scanner scanner;
 
@@ -42,13 +40,11 @@ public class DefaultUserEnterFactory implements UserEnter {
 			throw new NoSuchElementException("No line found");
 		
 		if (StringUtils.isNoneBlank(userEntered)) {
-			String[] strings = userEntered.split(Strings.SPACE);
-			for (String string : strings) {
-				Optional<UserEntry> userEntry = this.constructUserEntry(string);
-				if (userEntry.isPresent()) {
-					userEntries.add(userEntry.get());
+			Optional<UserEntry> userEntryOptional = this.constructUserEntry(userEntered);
+				if (userEntryOptional.isPresent()) {
+					userEntries.add(userEntryOptional.get());
 				}
-			}
+
 		}
 		return userEntries;
 	}
@@ -56,15 +52,8 @@ public class DefaultUserEnterFactory implements UserEnter {
 	public Optional<UserEntry> constructUserEntry(String userEntered) {
 		Optional<UserEntry> userEntry = Optional.empty();
 		
-		if (StringUtils.isNotBlank(userEntered)) {
-			//if (StringUtils.isNumeric(userEntered)) {
-			if (userEntered.matches(REGEX_DIGIT_PATTERN)) {
-				userEntry = getDigitalUserEntry(userEntered);
-			}
-			else {
-				userEntry = getOperatorUserEntry(userEntered);
-			}
-		}
+		userEntry = getOperatorUserEntry(userEntered);
+
 		return userEntry;
 	}
 

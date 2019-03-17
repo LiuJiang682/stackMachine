@@ -33,7 +33,7 @@ public class Clear implements UserEntry {
 			record.ifPresent(consumer);
 		}
 	}
-
+	
 	protected Optional<OperationRecord> getOperationRecord(List<BigDecimal> elements) {
 		if (CollectionUtils.isNotEmpty(elements)) {
 			Collections.reverse(elements);
@@ -41,5 +41,4 @@ public class Clear implements UserEntry {
 		}
 		return Optional.empty();
 	}
-
 }

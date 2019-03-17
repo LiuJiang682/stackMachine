@@ -1,14 +1,18 @@
 package au.com.nab.stackmachine.userenter.operator;
 
-import au.com.nab.stackmachine.storage.Storage;
-import au.com.nab.stackmachine.userenter.UserEntry;
+import java.math.BigDecimal;
 
-public class Neg implements UserEntry {
+import au.com.nab.stackmachine.history.record.OperationRecord;
+import au.com.nab.stackmachine.storage.Storage;
+
+public class Neg extends UnaryOperator {
 
 	@Override
-	public void execute(Storage storage) {
-		// TODO Auto-generated method stub
-
+	protected void performDetailOperation(Storage storage) {
+		BigDecimal digit = storage.popDigit();
+		storage.pushDigit(digit.negate());
+		OperationRecord record = getOperationRecord(digit);
+		storage.pushOperationRecord(record);
 	}
 
 }
