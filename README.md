@@ -45,6 +45,5 @@ Usage:
 4. cd path-to-unzip-file-directory
 5. mvn clean install
 6. mvn package assembly:single
-7. java -jar target/RpnCalculator-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+7. java -jar target/StackMachine-0.0.1-SNAPSHOT-jar-with-dependencies.jar
 
-Note: I am not sure how the position 15 comes from in the Example 8 of the tech-programming-test-rpn-1.1.7.pdf, I assume it is the position of the trouble operator in order of input from user. I program it at this way. Please take note at this.
