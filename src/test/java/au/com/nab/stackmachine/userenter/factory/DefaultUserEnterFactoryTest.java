@@ -20,7 +20,7 @@ import org.mockito.Matchers;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.reflect.Whitebox;
 
-import au.com.nab.stackmachine.fixture.RpnCalculatorTestFixture;
+import au.com.nab.stackmachine.fixture.StackMachineTestFixture;
 import au.com.nab.stackmachine.userenter.UserEntry;
 import au.com.nab.stackmachine.userenter.factory.DefaultUserEnterFactory;
 import au.com.nab.stackmachine.userenter.operator.Add;
@@ -137,15 +137,15 @@ public class DefaultUserEnterFactoryTest {
 	}
 	
 	/**
-	 * Given the user enter a "+" string
+	 * Given the user enter an add string
 	 * When the constructUserEntry method called
 	 * Then a Optional UserEntry object  
 	 * should return
 	 */
 	@Test
-	public void whenUserEnteredAnAdditionStringThenAnDigitalUserEntryOptionalObjectShouldReturn() {
+	public void whenUserEnteredAnAddStringThenAnDigitalUserEntryOptionalObjectShouldReturn() {
 		//Given user entered an addition string 
-		String userEntered = "+";
+		String userEntered = "add";
 		//When the constructUserEntry called
 		Optional<UserEntry> userEntry = testInstance.constructUserEntry(userEntered);
 		//Then the an valid optional object with addition
@@ -199,7 +199,7 @@ public class DefaultUserEnterFactoryTest {
 	@Test
 	public void whenUserEnteredValidStringThenAnOperatorOptionalObjectShouldReturn() {
 		//Given user entered an valid string 
-		String userEntered = "+";
+		String userEntered = "add";
 		//When the constructUserEntry called
 		Optional<UserEntry> userEntry = testInstance.getOperatorUserEntry(userEntered);
 		//Then the an empty optional object should return
@@ -314,7 +314,7 @@ public class DefaultUserEnterFactoryTest {
 	}
 	
 	private void givenMockByteArrayInputStreamScanner(String input) {
-		InputStream in = RpnCalculatorTestFixture.givenByteArrayInputStream(input);
+		InputStream in = StackMachineTestFixture.givenByteArrayInputStream(input);
 	    System.setIn(in);
 	    mockScanner = new Scanner(System.in);
 	}

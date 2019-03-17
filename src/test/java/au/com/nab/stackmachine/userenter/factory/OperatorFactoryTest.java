@@ -9,26 +9,25 @@ import java.util.Optional;
 import org.junit.Test;
 
 import au.com.nab.stackmachine.userenter.UserEntry;
-import au.com.nab.stackmachine.userenter.factory.OperatorFactory;
 import au.com.nab.stackmachine.userenter.operator.Add;
 import au.com.nab.stackmachine.userenter.operator.Clear;
 import au.com.nab.stackmachine.userenter.operator.Inv;
 import au.com.nab.stackmachine.userenter.operator.Mul;
-import au.com.nab.stackmachine.userenter.operator.SquareRoot;
-import au.com.nab.stackmachine.userenter.operator.Subtraction;
+import au.com.nab.stackmachine.userenter.operator.Print;
+import au.com.nab.stackmachine.userenter.operator.Quit;
 import au.com.nab.stackmachine.userenter.operator.Undo;
 
 public class OperatorFactoryTest {
 
 	/**
-	 * Given an addition string
+	 * Given an add string
 	 * When the gerOperator method called
-	 * Then the addition operator should return
+	 * Then the add operator should return
 	 */
 	@Test
-	public void whenAnAdditionStringProvidedThenTheAdditionOperatorShouldReturn() {
-		//Given an addition string
-		String userEntered = "+";
+	public void whenAnAdditionStringProvidedThenTheAddOperatorShouldReturn() {
+		//Given an add string
+		String userEntered = "add";
 		//When the getOperator method called
 		Optional<UserEntry> userEntry = OperatorFactory.getOperator(userEntered);
 		//Then the addition operator return
@@ -38,31 +37,31 @@ public class OperatorFactoryTest {
 	}
 	
 	/**
-	 * Given a subtract string
+	 * Given a print string
 	 * When the gerOperator method called
-	 * Then the subtract operator should return
+	 * Then the print operator should return
 	 */
 	@Test
-	public void whenASubtractStringProvidedThenTheSubtractionOperatorShouldReturn() {
-		//Given a subtraction string
-		String userEntered = "-";
+	public void whenAPrintStringProvidedThenThePrintOperatorShouldReturn() {
+		//Given a print string
+		String userEntered = "print";
 		//When the getOperator method called
 		Optional<UserEntry> userEntry = OperatorFactory.getOperator(userEntered);
 		//Then the Subtraction operator return
 		assertNotNull(userEntry);
 		assertTrue(userEntry.isPresent());
-		assertTrue(userEntry.get() instanceof Subtraction);
+		assertTrue(userEntry.get() instanceof Print);
 	}
 	
 	/**
-	 * Given a multiplication string
+	 * Given a mul string
 	 * When the gerOperator method called
-	 * Then the multiplication operator should return
+	 * Then the mul operator should return
 	 */
 	@Test
-	public void whenAMultiplicationStringProvidedThenTheMultiplicationOperatorShouldReturn() {
+	public void whenAMultiplicationStringProvidedThenTheMulOperatorShouldReturn() {
 		//Given a multiplication string
-		String userEntered = "*";
+		String userEntered = "Mul";
 		//When the getOperator method called
 		Optional<UserEntry> userEntry = OperatorFactory.getOperator(userEntered);
 		//Then the Multiplication operator return
@@ -72,14 +71,14 @@ public class OperatorFactoryTest {
 	}
 	
 	/**
-	 * Given a division string
+	 * Given a Inv string
 	 * When the gerOperator method called
 	 * Then the division operator should return
 	 */
 	@Test
-	public void whenADivisionStringProvidedThenTheDivisionOperatorShouldReturn() {
+	public void whenAInvStringProvidedThenTheInvperatorShouldReturn() {
 		//Given a division string
-		String userEntered = "/";
+		String userEntered = "Inv";
 		//When the getOperator method called
 		Optional<UserEntry> userEntry = OperatorFactory.getOperator(userEntered);
 		//Then the division operator return
@@ -89,20 +88,20 @@ public class OperatorFactoryTest {
 	}
 	
 	/**
-	 * Given a square root string
+	 * Given a quit string
 	 * When the gerOperator method called
-	 * Then the square root operator should return
+	 * Then the quit operator should return
 	 */
 	@Test
-	public void whenASqrtStringProvidedThenTheSquareRootOperatorShouldReturn() {
-		//Given a sqrt string
-		String userEntered = "sqrt";
+	public void whenAQuitStringProvidedThenTheQuitOperatorShouldReturn() {
+		//Given a quit string
+		String userEntered = "quit";
 		//When the getOperator method called
 		Optional<UserEntry> userEntry = OperatorFactory.getOperator(userEntered);
 		//Then the square root operator return
 		assertNotNull(userEntry);
 		assertTrue(userEntry.isPresent());
-		assertTrue(userEntry.get() instanceof SquareRoot);
+		assertTrue(userEntry.get() instanceof Quit);
 	}
 	
 	/**

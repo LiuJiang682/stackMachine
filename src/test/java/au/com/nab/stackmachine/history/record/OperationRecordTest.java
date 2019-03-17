@@ -10,10 +10,9 @@ import java.util.List;
 
 import org.junit.Test;
 
-import au.com.nab.stackmachine.fixture.RpnCalculatorTestFixture;
-import au.com.nab.stackmachine.history.record.OperationRecord;
+import au.com.nab.stackmachine.fixture.StackMachineTestFixture;
 import au.com.nab.stackmachine.userenter.UserEntry;
-import au.com.nab.stackmachine.userenter.operator.SquareRoot;
+import au.com.nab.stackmachine.userenter.operator.Neg;
 
 public class OperationRecordTest {
 
@@ -25,8 +24,8 @@ public class OperationRecordTest {
 	@Test
 	public void whenContructorCalledThenObjectShouldReturn() {
 		//Given the parameters
-		List<BigDecimal> params = RpnCalculatorTestFixture.getOperationParameters();
-		UserEntry operator = new SquareRoot();
+		List<BigDecimal> params = StackMachineTestFixture.getOperationParameters();
+		UserEntry operator = new Neg();
 		//When the constructor called
 		OperationRecord record = new OperationRecord(params, operator);
 		//Then the object should return
@@ -43,7 +42,7 @@ public class OperationRecordTest {
 	@Test
 	public void whenContructorCalledWithoutOperatorThenObjectShouldReturn() {
 		//Given the parameters
-		List<BigDecimal> params = RpnCalculatorTestFixture.getOperationParameters();
+		List<BigDecimal> params = StackMachineTestFixture.getOperationParameters();
 		UserEntry operator = null;
 		//When the constructor called
 		OperationRecord record = new OperationRecord(params, operator);

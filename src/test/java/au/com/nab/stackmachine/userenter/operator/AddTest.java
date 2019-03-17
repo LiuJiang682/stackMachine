@@ -13,24 +13,25 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Matchers;
 
-import au.com.nab.stackmachine.fixture.RpnCalculatorTestFixture;
+import au.com.nab.stackmachine.fixture.StackMachineTestFixture;
 import au.com.nab.stackmachine.history.record.OperationRecord;
 import au.com.nab.stackmachine.storage.Storage;
-import au.com.nab.stackmachine.userenter.operator.Mul;
+import au.com.nab.stackmachine.userenter.operator.Add;
 
-public class MultiplicationTest {
+public class AddTest {
 
-	private Mul testInstance;
+	private Add testInstance;
 	
 	@Before
 	public void setUp() {
-		this.testInstance = new Mul();
+		this.testInstance = new Add();
 	}
 	
 	@After
 	public void tearDown() {
 		this.testInstance = null;
 	}
+	
 	/**
 	 * Given 2 elements in the storage
 	 * When the execute method called
@@ -39,12 +40,12 @@ public class MultiplicationTest {
 	@Test
 	public void when2ElementsProvidedThenStorageUpdateWithOneResult() {
 		//Given 2 elements in the storage
-		Storage mockStorage = RpnCalculatorTestFixture.givenMockStorage();
+		Storage mockStorage = StackMachineTestFixture.givenMockStorage();
 		
 		//When the execute method called
 		testInstance.execute(mockStorage);
 		//Then the storage is updated
-		verify(mockStorage).pushDigit(Matchers.eq(new BigDecimal(12)));
+		verify(mockStorage).pushDigit(Matchers.eq(new BigDecimal(8)));
 		verify(mockStorage, times(2)).popDigit();
 		verify(mockStorage).pushOperationRecord(Matchers.any(OperationRecord.class));
 	}

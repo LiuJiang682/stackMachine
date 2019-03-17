@@ -10,7 +10,7 @@ import org.powermock.api.mockito.PowerMockito;
 
 import au.com.nab.stackmachine.storage.Storage;
 
-public class RpnCalculatorTestFixture {
+public class StackMachineTestFixture {
 
 	public static InputStream givenByteArrayInputStream(String input) {
 		InputStream in = new ByteArrayInputStream(input.getBytes());

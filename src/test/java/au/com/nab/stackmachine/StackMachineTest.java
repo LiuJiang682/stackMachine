@@ -1,7 +1,11 @@
 package au.com.nab.stackmachine;
 
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
 
 import java.io.FileInputStream;
@@ -11,14 +15,16 @@ import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
+import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.reflect.Whitebox;
 
-import au.com.nab.stackmachine.StackMachine;
 import au.com.nab.stackmachine.history.record.OperationRecord;
 import au.com.nab.stackmachine.storage.Storage;
 import au.com.nab.stackmachine.userenter.UserEnter;
@@ -28,11 +34,9 @@ import au.com.nab.stackmachine.userenter.operator.Add;
 import au.com.nab.stackmachine.userenter.operator.Clear;
 import au.com.nab.stackmachine.userenter.operator.Inv;
 import au.com.nab.stackmachine.userenter.operator.Mul;
-import au.com.nab.stackmachine.userenter.operator.SquareRoot;
-import au.com.nab.stackmachine.userenter.operator.Subtraction;
 import au.com.nab.stackmachine.userenter.operator.Undo;
 
-public class RpnCalculatorTest {
+public class StackMachineTest {
 
 	private StackMachine testInstance;
 	
@@ -98,88 +102,37 @@ public class RpnCalculatorTest {
 	}
 	
 	/**
-	 * Given an Addition class UserEntry object
+	 * Given an Add class UserEntry object
 	 * When the formatErrorMessage method called
-	 * Then the "+" should return
+	 * Then the "Add" should return
 	 */
 	@Test
-	public void whenAdditionUserEntryProvidedThenPlusSignShouldReturn() {
-		//Given an Addition class UserEntry object
+	public void whenAddUserEntryProvidedThenPlusSignShouldReturn() {
+		//Given an Add class UserEntry object
 		Add e = new Add();
 		int counter = 1;
 		//When the formatErrorMessage method called
 		String message = testInstance.formatErrorMessage(e, counter);
 		//Then the message should contains "+"
 		assertNotNull(message);
-		assertEquals("Operator: + (position: 1): insufficient parameters", message);
+		assertEquals("Operator: Add (position: 1): insufficient parameters", message);
 	}
 	
 	/**
-	 * Given an Subtraction class UserEntry object
+	 * Given an Mul class UserEntry object
 	 * When the formatErrorMessage method called
-	 * Then the "-" should return
+	 * Then the "Mul" should return
 	 */
 	@Test
-	public void whenSubtractionUserEntryProvidedThenPlusSignShouldReturn() {
-		//Given an Subtraction class UserEntry object
-		Subtraction e = new Subtraction();
-		int counter = 1;
-		//When the formatErrorMessage method called
-		String message = testInstance.formatErrorMessage(e, counter);
-		//Then the message should contains "+"
-		assertNotNull(message);
-		assertEquals("Operator: - (position: 1): insufficient parameters", message);
-	}
-	
-	/**
-	 * Given an Multiplication class UserEntry object
-	 * When the formatErrorMessage method called
-	 * Then the "*" should return
-	 */
-	@Test
-	public void whenMultiplicationUserEntryProvidedThenPlusSignShouldReturn() {
-		//Given an Multiplication class UserEntry object
+	public void whenMulUserEntryProvidedThenPlusSignShouldReturn() {
+		//Given an Mul class UserEntry object
 		Mul e = new Mul();
 		int counter = 1;
 		//When the formatErrorMessage method called
 		String message = testInstance.formatErrorMessage(e, counter);
 		//Then the message should contains "+"
 		assertNotNull(message);
-		assertEquals("Operator: * (position: 1): insufficient parameters", message);
-	}
-	
-	/**
-	 * Given an Division class UserEntry object
-	 * When the formatErrorMessage method called
-	 * Then the "/" should return
-	 */
-	@Test
-	public void whenDivisionUserEntryProvidedThenPlusSignShouldReturn() {
-		//Given an Division class UserEntry object
-		Inv e = new Inv();
-		int counter = 1;
-		//When the formatErrorMessage method called
-		String message = testInstance.formatErrorMessage(e, counter);
-		//Then the message should contains "+"
-		assertNotNull(message);
-		assertEquals("Operator: / (position: 1): insufficient parameters", message);
-	}
-	
-	/**
-	 * Given an SquareRoot class UserEntry object
-	 * When the formatErrorMessage method called
-	 * Then the "sqrt" should return
-	 */
-	@Test
-	public void whenSquareRootUserEntryProvidedThenPlusSignShouldReturn() {
-		//Given an SquareRoot class UserEntry object
-		SquareRoot e = new SquareRoot();
-		int counter = 1;
-		//When the formatErrorMessage method called
-		String message = testInstance.formatErrorMessage(e, counter);
-		//Then the message should contains "+"
-		assertNotNull(message);
-		assertEquals("Operator: sqrt (position: 1): insufficient parameters", message);
+		assertEquals("Operator: Mul (position: 1): insufficient parameters", message);
 	}
 	
 	/**
@@ -196,7 +149,7 @@ public class RpnCalculatorTest {
 		String message = testInstance.formatErrorMessage(e, counter);
 		//Then the message should contains "+"
 		assertNotNull(message);
-		assertEquals("Operator: clear (position: 1): insufficient parameters", message);
+		assertThat(message, is(equalTo("Operator: Clear (position: 1): insufficient parameters")));
 	}
 	
 	/**
@@ -213,7 +166,24 @@ public class RpnCalculatorTest {
 		String message = testInstance.formatErrorMessage(e, counter);
 		//Then the message should contains "+"
 		assertNotNull(message);
-		assertEquals("Operator: undo (position: 1): insufficient parameters", message);
+		assertThat(message, is(equalTo("Operator: Undo (position: 1): insufficient parameters")));
+	}
+	
+	/**
+	 * Given an Inv class UserEntry object
+	 * When the formatErrorMessage method called
+	 * Then the "Inv" should return
+	 */
+	@Test
+	public void whenInvUserEntryProvidedThenPlusSignShouldReturn() {
+		//Given an Inv class UserEntry object
+		Inv e = new Inv();
+		int counter = 1;
+		//When the formatErrorMessage method called
+		String message = testInstance.formatErrorMessage(e, counter);
+		//Then the message should contains "+"
+		assertNotNull(message);
+		assertThat(message, is(equalTo("Operator: Inv (position: 1): insufficient parameters")));
 	}
 	
 	/**
@@ -267,33 +237,39 @@ public class RpnCalculatorTest {
 	@Test
 	public void whenMockStorageAndInputProvidedWithExceptionThenWarningDisplay() throws Throwable {
 		//Given the mock storage and user input
-		StackMachine partialMockCalculator = PowerMockito.mock(StackMachine.class);
+		StackMachine partialMockStackMachine = PowerMockito.mock(StackMachine.class);
 		Storage mockStorage = PowerMockito.mock(Storage.class);
-		Whitebox.setInternalState(partialMockCalculator, "storage", mockStorage);
+		Whitebox.setInternalState(partialMockStackMachine, "storage", mockStorage);
 		UserEnter mockUserEnter = PowerMockito.mock(UserEnter.class);
 		List<UserEntry> entries = new ArrayList<>();
 		UserEntry mockEntry = PowerMockito.mock(UserEntry.class);
 		PowerMockito.doThrow(new EmptyStackException()).when(mockEntry, "execute", mockStorage);
 		entries.add(mockEntry);
 		PowerMockito.when(mockUserEnter.getUserInput()).thenReturn(entries, null);
-		Whitebox.setInternalState(partialMockCalculator, "userEnter", mockUserEnter);
-		
-		PowerMockito.doCallRealMethod().when(partialMockCalculator, "run");
-		
+		Whitebox.setInternalState(partialMockStackMachine, "userEnter", mockUserEnter);
+		PowerMockito.doCallRealMethod().when(partialMockStackMachine, "run");
+		PowerMockito.doReturn("Operator: Pop (position: 1): insufficient parameters").when(partialMockStackMachine, "formatErrorMessage", Matchers.any(UserEntry.class), Matchers.anyInt());
+		Logger mockLogger = Mockito.mock(Logger.class);
+		Whitebox.setInternalState(StackMachine.class, "LOGGER", mockLogger);
 		//When the run method called
-		partialMockCalculator.run();
+		partialMockStackMachine.run();
 		//Then the warning display
-		verify(mockStorage).printStack();
+		ArgumentCaptor<String> errorMessageCaptor = ArgumentCaptor.forClass(String.class);
+		verify(mockLogger).error(errorMessageCaptor.capture());
+		List<String> messages = errorMessageCaptor.getAllValues();
+		assertThat(messages, is(notNullValue()));
+		assertThat(messages.size(), is(equalTo(1)));
+		assertThat(messages.get(0), is(equalTo("Operator: Pop (position: 1): insufficient parameters")));
 	}
 	
 	/**
-	 * Given the RpnCalculator object
+	 * Given the StackMachine object
 	 * When the getStorage method called
 	 * Then an empty storage should return
 	 */
 	@Test
-	public void whenRpnCalculatorObjectProvidedThenAnEmptyStorageShouldReturn() {
-		//Given the RpnCalculator object
+	public void whenStackMachineObjectProvidedThenAnEmptyStorageShouldReturn() {
+		//Given the StackMachine object
 		//When the getStorage method called
 		Storage storage = testInstance.getStorage();
 		//Then an empty storage should return

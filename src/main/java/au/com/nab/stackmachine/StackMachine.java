@@ -5,6 +5,8 @@ import java.util.EmptyStackException;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.log4j.Logger;
+
 import au.com.nab.stackmachine.storage.DefaultStorage;
 import au.com.nab.stackmachine.storage.Storage;
 import au.com.nab.stackmachine.userenter.UserEnter;
@@ -13,6 +15,8 @@ import au.com.nab.stackmachine.userenter.factory.DefaultUserEnterFactory;
 
 public class StackMachine {
 
+	private static Logger LOGGER = Logger.getLogger(StackMachine.class);
+	
 	private static final int ONE = 1;
 	private UserEnter userEnter;
 	private Storage storage;
@@ -40,7 +44,7 @@ public class StackMachine {
 					counter.incrementAndGet();
 				}
 				catch (EmptyStackException ese) {
-					System.err.println(formatErrorMessage(e, counter.get()));
+					LOGGER.error(formatErrorMessage(e, counter.get()));
 					break;
 				}
 			}
@@ -49,35 +53,12 @@ public class StackMachine {
 
 	protected String formatErrorMessage(UserEntry e, int counter) {
 		StringBuilder buf = new StringBuilder("Operator: ");
-//		switch (e.getClass().getSimpleName()) {
-//			case "Addition" :
-//				buf.append(OperatorsEnum.ADDITION.getCode());
-//				break;
-//			case "Subtraction" :
-//				buf.append(OperatorsEnum.SUBTRACTION.getCode());
-//				break;
-//			case "Multiplication" :
-//				buf.append(OperatorsEnum.MULTIPLICATION.getCode());
-//				break;
-//			case "Division" :
-//				buf.append(OperatorsEnum.DIVISION.getCode());
-//				break;
-//			case "SquareRoot" :
-//				buf.append(OperatorsEnum.SQUAREROOT.getCode());
-//				break;
-//			case "Clear" :
-//				buf.append(OperatorsEnum.CLEAR.getCode());
-//				break;
-//			case "Undo" :
-//				buf.append(OperatorsEnum.UNDO.getCode());
-//				break;
-//			default:
-//				buf.append(e.getClass().getSimpleName());
-//		}
-//		buf.append(" (position: ");
-//		buf.append(counter);
-//		buf.append("): insufficient parameters");
-//		
+		
+		buf.append(e.getClass().getSimpleName());
+		buf.append(" (position: ");
+		buf.append(counter);
+		buf.append("): insufficient parameters");
+		
 		return buf.toString();
 	}
 

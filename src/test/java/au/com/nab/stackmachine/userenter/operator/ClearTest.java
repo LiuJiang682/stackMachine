@@ -18,7 +18,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.powermock.api.mockito.PowerMockito;
 
-import au.com.nab.stackmachine.fixture.RpnCalculatorTestFixture;
+import au.com.nab.stackmachine.fixture.StackMachineTestFixture;
 import au.com.nab.stackmachine.history.record.OperationRecord;
 import au.com.nab.stackmachine.storage.Storage;
 import au.com.nab.stackmachine.userenter.operator.Clear;
@@ -82,7 +82,7 @@ public class ClearTest {
 	public void when2ElementsProvidedThenAnOperationRecordShouldReturn() {
 		//Given 2 elements in the storage
 		//When the getOperaitonRecord method called
-		Optional<OperationRecord> recordOptional = this.testInstance.getOperationRecord(RpnCalculatorTestFixture.get2OperationParameters());
+		Optional<OperationRecord> recordOptional = this.testInstance.getOperationRecord(StackMachineTestFixture.get2OperationParameters());
 		//Then an OperationRecord object should return
 		assertNotNull(recordOptional);
 		assertTrue(recordOptional.isPresent());

@@ -15,7 +15,7 @@ import org.junit.Test;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.reflect.Whitebox;
 
-import au.com.nab.stackmachine.fixture.RpnCalculatorTestFixture;
+import au.com.nab.stackmachine.fixture.StackMachineTestFixture;
 import au.com.nab.stackmachine.history.record.OperationRecord;
 import au.com.nab.stackmachine.storage.DefaultStorage;
 import au.com.nab.stackmachine.storage.Storage;
@@ -83,7 +83,7 @@ public class DefaultStorageTest {
 	@Test
 	public void whenOperationRecordProvidedThenHistoryShouldHasTheRecord() {
 		//Given an OperationRecord
-		OperationRecord record = new OperationRecord(RpnCalculatorTestFixture.getOperationParameters(), null);
+		OperationRecord record = new OperationRecord(StackMachineTestFixture.getOperationParameters(), null);
 		this.assertEmptyHistory(testInstance);
 		//When the pushOperationRecord method called
 		testInstance.pushOperationRecord(record);
@@ -164,7 +164,7 @@ public class DefaultStorageTest {
 	private DefaultStorage givenMockStorage() {
 		DefaultStorage mockStorage = PowerMockito.mock(DefaultStorage.class);
 		Stack<BigDecimal> list = new Stack<>();
-		list.addAll(RpnCalculatorTestFixture.get2OperationParameters());
+		list.addAll(StackMachineTestFixture.get2OperationParameters());
 		Whitebox.setInternalState(mockStorage, "digitStack", list);
 		return mockStorage;
 	}
